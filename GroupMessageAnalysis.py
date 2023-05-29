@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import difflib
 
-GROUP_NAME = "Let’s body this bus "
+GROUP_NAME = "Let’s body this bus"
 USERNAME = 'daviswestbrook'
 
 # establish connection
@@ -23,13 +23,14 @@ cur = conn.cursor()
 
 log = open("log.txt", "a+")
 log.truncate(0)
-#%%sw
+#%%
 
 # # get the names of the tables in the database
-# cur.execute('select name from sqlite_master where type = "table"')
-# for name in cur.fetchall():
-#     print(name)
-
+'''
+cur.execute('select name from sqlite_master where type = "table"')
+for name in cur.fetchall():
+    print(name)
+'''
 #%%
 
 # pd dataframe of all messages
@@ -40,6 +41,7 @@ messages = pd.read_sql_query('select *, datetime(message.date/1000000000 + strft
 # get the handles to apple-id mapping table
 print("finding handle id mapping...")
 handles = pd.read_sql_query('select * from handle', conn)
+
 # and join to the messages, on handle_id
 messages.rename(columns={'ROWID' : 'message_id'}, inplace = True)
 handles.rename(columns={'id' : 'phone_number', 'ROWID': 'handle_id'}, inplace = True)
@@ -50,12 +52,21 @@ merged = pd.merge(messages[['text', 'handle_id', 'date', 'message_id', 'cache_ha
 # get the chat to message mapping
 print("Finding chat mapping...")
 chat_message_joins = pd.read_sql_query('select * from chat_message_join', conn)
+
 # and merge to add chat_id
+
 messages = pd.merge(merged, chat_message_joins[['chat_id', 'message_id']], on = 'message_id', how='left')
 
-# find specific chat_id for relevant group
+# find specific chat_id for relevant group 
 chat = pd.read_sql_query('select * from chat', conn)
+'''
+print(type(chat))
+print(chat['display_name'].head(20))
+print(chat.columns)
+'''
 CHAT_ID = chat.loc[chat['display_name'] == GROUP_NAME]['ROWID'].values[0]
+
+
 #print(CHAT_ID)
 
 # slim down dataframe to only those messages in relevant chat
@@ -74,6 +85,8 @@ indices = {0:0}
 for handle in chat_handle["handle_id"].values:
     indices[handle] = member_count
     member_count += 1
+
+print(indices)
 
 #%%
 print("Initializing tables...")
