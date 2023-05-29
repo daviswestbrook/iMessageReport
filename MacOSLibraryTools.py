@@ -1,11 +1,11 @@
 import sqlite3
 import pandas as pd
-USERNAME = daviswestbrook
+USERNAME = 'daviswestbrook'
 
 def establish_connection():
     print("Connecting to database...")
     connection = sqlite3.connect('/Users/' + USERNAME + '/Library/Messages/chat.db')
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     return connection, cursor
 
 def get_available_tables():
@@ -25,6 +25,10 @@ def read_all_from_table(table):
     connection, cursor = establish_connection()
     table = pd.read_sql_query('select * from {}'.format(table), connection)
 
-def read_all_from_table(table, condition):
+def read_all_from_table(table, condition=None):
     connection, cursor = establish_connection()
-    table = pd.read_sql_query('select * from {} where {}'.format(table, condition), connection)
+    if condition:
+        response = pd.read_sql_query('select * from {} where {}'.format(table, condition), connection)
+    else:
+        response = pd.read_sql_query('select * from {}'.format(table), connection)
+    return response

@@ -1,7 +1,8 @@
 import MacOSLibraryTools as db
+import pandas as pd
 
-def Message:
-    __init__(self, text, sender_ID):
+class Message:
+    def __init__(self, text, sender_ID):
         self.text = text
         self.sender_ID = sender_ID
         self.timestamp = timestamp
@@ -20,7 +21,7 @@ def get_message_stream_by_group(messages, group_ID, texters): # needs to handle 
     messages = messages.loc[messages['chat_id'] == group_ID]
     messages = messages.reset_index(drop=True)
     print("Handling group members...")
-    chat_handle = pd.read_sql_query('select * from chat_handle_join where chat_id = ' + str(CHAT_ID), conn)
+    #chat_handle = db.read_all_from_table('chat_handle_join', 'chat_id = ' + str(group_ID))
     return messages
 
 

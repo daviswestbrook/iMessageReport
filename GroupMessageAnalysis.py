@@ -74,7 +74,7 @@ print("Slimming down message DataFrame")
 messages = messages.loc[messages['chat_id'] == CHAT_ID]
 messages = messages.reset_index(drop=True)
 #%%
-
+#############################
 # find all the group members of relevant group
 print("Handling group members...")
 chat_handle = pd.read_sql_query('select * from chat_handle_join where chat_id = ' + str(CHAT_ID), conn)
