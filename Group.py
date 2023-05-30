@@ -5,6 +5,7 @@ USERNAME = "daviswestbrook"
 
 class Group:
     def __init__(self, group_ID, messages=None):
+        print("group __init__")
         self.group_ID = group_ID
         texter_mapping = make_texters(group_ID)
         if messages is not None:
@@ -34,6 +35,7 @@ class Group:
         
 
 def get_groups():
+    print("get_groups")
     chat_records = db.read_all_from_table('chat')
     not_null_msk = chat_records['display_name'].notnull()
     cols = ['ROWID', 'display_name']
@@ -69,6 +71,7 @@ def consolidate_handles(handles):
     return handles
 
 def make_members(stream, mapping):
+    print("make_members")
     handle_to_member = {}
     unique = stream['handle_id'].unique()
     for handle in unique:

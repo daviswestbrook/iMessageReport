@@ -23,10 +23,6 @@ group_ID = Group.specify_group()
 print("building group")
 group1 = Group.Group(group_ID, messages)
 group1.write_to_csv()
-group2 = Group.Group(group_ID)
-
-print(group1)
-print(group2)
 
 # Make report
 
