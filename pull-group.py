@@ -22,8 +22,7 @@ group_ID = Group.specify_group()
 # Build group
 print("building group")
 group1 = Group.Group(group_ID, messages)
-Message.generate_reactors(group1.messages)
-group1.messages.to_csv("test.csv")
+group1.write_to_csv()
 
 # Make report
 
