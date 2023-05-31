@@ -13,7 +13,7 @@ print("building group")
 group_ID = Group.specify_group()
 group1 = Group.Group(group_ID)
 
-Message.populate_reactors(group1.messages)
+Message.generate_reactors(group1.messages)
 
 group1.messages.to_csv("test.csv")
 

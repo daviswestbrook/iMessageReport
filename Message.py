@@ -7,15 +7,13 @@ class Message:
         self.sender_ID = sender_ID
         self.timestamp = timestamp
 
-
-
 def get_message_stream():
     print("get_message_stream")
     messages = db.get_all_messages()
     messages.rename(columns={'ROWID' : 'message_id'}, inplace = True)
     return messages
 
-def get_message_stream_by_group(messages, group_ID, texters): # needs to handle people who are no longer in the group!
+def get_message_stream_by_group(messages, group_ID, texters): 
     print("get_message_stream_by_group")
     merged = pd.merge(messages[['text', 'handle_id', 'date', 'message_id', 'cache_has_attachments', 'date_uct']],  texters[['handle_id', 'phone_number']], on ='handle_id', how='left')
     chat_message_joins = db.read_all_from_table('chat_message_join')
@@ -48,9 +46,9 @@ def get_message_stream_from_csv(group_ID):
     return stream
 
 
-def populate_reactors(stream): # assumes names have already been filled in
+def generate_reactors(stream): # assumes names have already been filled in
     # to handle weird formatting for different message types
-    log = open("log_populate_reactors.txt", "a+")
+    log = open("log_generate_reactors.txt", "a+")
     log.truncate(0)
     attachments = ['n imag', 'n attachmen', ' contac', ' movi', 'n audio messag']
     for i, msg in stream.iterrows():
