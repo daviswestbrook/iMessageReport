@@ -10,6 +10,7 @@ def establish_connection():
     return connection, cursor
 
 def get_available_tables():
+    #Lists all the tables stored in iMessage database
     connection, cursor = establish_connection()
     cursor.execute('select name from sqlite_master where type = "table"')
     table_list = []
