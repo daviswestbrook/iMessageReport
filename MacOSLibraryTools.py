@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
-USERNAME = 'daviswestbrook'
+import os
+USERNAME = os.getlogin()
 
 def establish_connection():
     print("Connecting to database...")
