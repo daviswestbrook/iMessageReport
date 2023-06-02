@@ -1,7 +1,7 @@
 import MacOSLibraryTools as db
 import Message
 GROUP_NAME = "Let’s body this bus"
-USERNAME = "daviswestbrook"
+
 
 class Group:
     def __init__(self, group_ID, messages=None):
@@ -33,7 +33,6 @@ class Group:
         filename = str(self.group_ID) + ".csv"
         self.messages.to_csv(filename)
         
-
 def get_groups():
     print("get_groups")
     chat_records = db.read_all_from_table('chat')
@@ -42,22 +41,16 @@ def get_groups():
     group_names = chat_records.loc[not_null_msk, cols]
     return group_names
     
-
 def specify_group():
     #TODO
-   
     chat_records = db.read_all_from_table('chat')
     CHAT_ID = chat_records.loc[chat_records['display_name'] == GROUP_NAME]['ROWID'].values[0]
     return CHAT_ID
-
-
-    
 
 def make_texters(group_ID):
     handles = get_handles(group_ID)
     texters = consolidate_handles(handles)
     return texters
-
 
 def get_handles(group_ID):
     #currently this is for all messages (not just the group)
