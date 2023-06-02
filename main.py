@@ -1,5 +1,5 @@
-import Message
-import Group
+import message
+import group
 
 
 
@@ -9,20 +9,20 @@ log.truncate(0)
 
 # Get messages (DataFrame)
 print("getting all messages...")
-messages = Message.get_message_stream()
+messages = message.get_message_stream()
 
 # Find groups
 print("getting groups")
-groups = Group.get_groups()
+groups = group.get_groups()
 
 # Ask user to specify group
 print("specifying groups")
-group_ID = Group.specify_group()
+group_ID = group.specify_group()
 
 # Build group
 print("building group")
-group1 = Group.Group(group_ID, messages)
-Message.generate_reactors(group1.messages)
+group1 = group.Group(group_ID, messages)
+message.generate_reactors(group1.messages)
 group1.messages.to_csv("test.csv")
 
 # Make report

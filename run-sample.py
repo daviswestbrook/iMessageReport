@@ -1,5 +1,5 @@
-import Message
-import Group
+import message
+import group
 
 
 
@@ -10,10 +10,10 @@ log.truncate(0)
 
 # Build group from sample csv
 print("building group")
-group_ID = Group.specify_group()
-group1 = Group.Group(group_ID)
+group_ID = group.specify_group()
+group1 = group.Group(group_ID)
 
-Message.generate_reactors(group1.messages)
+message.generate_reactors(group1.messages)
 
 group1.messages.to_csv("test.csv")
 

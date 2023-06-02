@@ -1,5 +1,5 @@
-import MacOSLibraryTools as db
-import Message
+import dbtools as db
+import message
 GROUP_NAME = "Let’s body this bus"
 
 
@@ -9,14 +9,14 @@ class Group:
         self.group_ID = group_ID
         texter_mapping = make_texters(group_ID)
         if messages is not None:
-            self.messages =  Message.get_message_stream_by_group(messages, group_ID, texter_mapping)
-            Message.add_reaction_columns(self.messages)
+            self.messages =  message.get_message_stream_by_group(messages, group_ID, texter_mapping)
+            message.add_reaction_columns(self.messages)
 
             self.member_mapping = make_members(self.messages, texter_mapping)
             self.members = set(self.member_mapping.values())
             self.messages["name"] = self.messages["handle_id"].map(self.member_mapping)
         else:
-            self.messages = Message.get_message_stream_from_csv(group_ID)
+            self.messages = message.get_message_stream_from_csv(group_ID)
             self.members = set(self.messages['name'].unique())
         
  
